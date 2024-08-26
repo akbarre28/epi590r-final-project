@@ -32,7 +32,6 @@ What type of trash is collected the most? Do the different Trash Wheels collect 
 
 >1. Run this R script below before rendring
 ```{r}
-
 #Install packages, if needed
 install.packages(c("tidyverse", "gtsummary", "here", "broom", "gt"))
 

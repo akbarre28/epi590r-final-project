@@ -56,13 +56,12 @@ table1 <- tbl_summary(
 	missing_text = "Missing"
 ) |>
 	modify_header(label ~ "**Trash Collected**") |>
-	modify_spanning_header(c("stat_1", "stat_2", "stat_3", "stat_4") ~ "**Trash Wheel Name**") |>
+	modify_spanning_header(all_stat_cols() ~ "**Trash Wheel Name**") |>
 	add_p(pvalue_fun = label_style_pvalue(digits = 2)) |>
 	add_overall(col_label = "**Overall**") |>
 	bold_labels()
 
 table1
-
 
 # Define the file path using here for saving the figure
 file_path <- here("documents", "summary_table.png")
@@ -115,18 +114,25 @@ ggsave(file_path, plot = figure1, width = 10, height = 6)
 #Pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt).
 # Cross-references to a table and a figure at least once each (1 pt).
 
+stats <- list(
+  n = nrow(trashwheel),
+  mean_trash = trashwheel %>%
+    rowwise() %>%
+    mutate(total_trash = sum(c_across(PlasticBottles:SportsBalls), na.rm = TRUE)) %>%
+    summarise(mean_trash = mean(total_trash, na.rm = TRUE)) %>%
+    pull(mean_trash),
+  tot_year = length(unique(trashwheel$year))  # Total number of years
+)
+
+inline_text(table1, variable = "CigaretteButts", column = "stat_2",
+            pattern = "{n}/{N} ({p}%)")
+inline_text(table1, variable = "CigaretteButts", column = "stat_4",
+            pattern = "{n}/{N} ({p}%)")
+
 ```
 
-inline_text(table1, variable = "glasses", column = "stat_0",
-            pattern = "{n}/{N} ({p}%)")
-            
-stats <- list(n = nrow(data),
-              mean_age = mean(data$age))
+- @fig-hist illustrates the number of homes powered each year, with a note highlighting that each ton of trash generates an average of 500 kW of electricity, sufficient for an average household's daily consumption of 30 kW.
+- @tbl-one displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as 'Missing' and p-values highlighted.
+- There were `r stats$n` Trash Wheels in the Mr. Trash Wheel Baltimore Healthy Harbor initiative, with an average of `r stats$mean_trash` pieces of trash collected for over `r stats$tot_year` years.  
+- Professor Trash Wheels collected a greater proportion of cigarette butts (`r inline_text(table1, variable = "CigaretteButts", column = "stat_2")`)  compared to the Gwynnda Trash Wheels (`r inline_text(table1, variable = "CigaretteButts", column = "stat_4")`).
 
-There were `r stats$n` participants with a mean age of `r stats$mean_age`.  
-
-A greater proportion of female (`r inline_text(table1, variable = "glasses", column = "stat_2")`) than male 
-
-(`r inline_text(table1, variable = "glasses", column = "stat_1")`) participants wore glasses.
-
-@fig-hist contains a histogram and @tbl-one a summary table.

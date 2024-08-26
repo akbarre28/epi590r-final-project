@@ -49,12 +49,11 @@ summary_table
 
 	# Regression - Fit a regression and present well-formatted results from the regression (1 pt). The regression doesn’t have to be of any particular scientific interest, and you don’t have to interpret it in any particular way. You may use {broom} or {gtsummary} or both.
 
-# regression of no. of homes pwered based on each ton of trash collected (y) a series of predictor (x) variables
 tbl_uvregression(
 	trashwheel,
-	y = HomesPowered,
+	y = Weight,
 	include = c(
-		PlasticBottles, Polystyrene, CigaretteButts, GlassBottles,
+		HomesPowered, PlasticBottles, Polystyrene, CigaretteButts, GlassBottles,
 		PlasticBags, Wrappers, SportsBalls
 	),
 	method = lm

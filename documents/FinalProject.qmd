@@ -4,7 +4,7 @@ author: "Alexis Barrett"
 format: html
 ---
 
-```{r} 
+```{r}
 #Setting up data and libraries
 
 #| output: false
@@ -29,11 +29,9 @@ trashwheel <- read.csv(here("data", "trashwheel.csv"))
 
 ```
 
-
-	
 ## Table
 
-```{r} 
+```{r}
 #| label: tbl-one
 #| tbl-cap: "Trash Wheel Collection Data"
 
@@ -62,32 +60,73 @@ table1 <- tbl_summary(
 	bold_labels()
 
 table1
+```
 
+```{r}
 # Define the file path using here for saving the figure
 file_path <- here("documents", "summary_table.png")
 # Save the figure
 ggsave(file_path, plot = table1, width = 10, height = 6)
-
 ```
 
+<br>
 
 ## Regression
 
-```{r} 
+```{r}
+new_table_function <- function(model, tidy_fun = broom.helpers::tidy_with_broom_or_parameters) {
+	tbl_regression(
+		model,
+		exponentiate = TRUE,
+		label = list(
+					HomesPowered ~ "Homes Powered",
+					PlasticBottles ~ "Plastic Bottles Collected",
+					Polystyrene ~ "Polystyrene Items Collected",
+					CigaretteButts ~ "Cigarette Butts Collected",
+					GlassBottles ~ "Glass Bottles Collected",
+					PlasticBags ~ "Plastic Bags Collected",
+					Wrappers ~ "Wrappers Collected",
+					SportsBalls ~ "Sports Balls Collected"
+		),
+		tidy_fun = tidy_fun
+	)
+}
 
+logistic_model <- glm(
+	Weight ~ HomesPowered + PlasticBottles + Polystyrene + 
+		CigaretteButts + GlassBottles + PlasticBags + Wrappers + 
+			SportsBalls,
+	data = trashwheel, 
+	family = binomial()
+)
 
-
-lm_model <- lm(age ~ strength + roast_level, data = coffee_survey, na.action=na.exclude)
-
-
+poisson_model <- glm(
+	Weight ~ HomesPowered + PlasticBottles + Polystyrene + 
+		CigaretteButts + GlassBottles + PlasticBags + Wrappers + 
+			SportsBalls,
+	data = trashwheel, 
+	family = poisson()
+)
 ```
 
+```{r}
+#| label: tbl-logistic
+#| tbl-cap: "Logistic regression"
+new_table_function(logistic_model)
+```
+
+```{r}
+#| label: tbl-poisson
+#| tbl-cap: "Poisson regression"
+#| message: false
+new_table_function(poisson_model, tidy_fun = partial(tidy_robust, vcov = "HC1"))
+```
+
+<br>
 
 ## Figure
 
-```{r} 
-
-
+```{r}
 #| label: fig-hist
 #| fig-cap: "Homes Powered Over the Years"
 
@@ -99,21 +138,20 @@ figure1 <- ggplot(trashwheel, aes(x = as.factor(Year), y = HomesPowered)) +
 	theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 figure1
+```
 
-
+```{r}
 # Define the file path using here for saving the figure
 file_path <- here("documents", "homes_powered_fig.png")
 # Save the figure
 ggsave(file_path, plot = figure1, width = 10, height = 6)
-
 ```
 
+<br>
 
-#InLine & Cross-Reference
+## InLine & Cross-Reference
+
 ```{r}
-#Pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt).
-# Cross-references to a table and a figure at least once each (1 pt).
-
 stats <- list(
   n = nrow(trashwheel),
   mean_trash = trashwheel %>%
@@ -128,11 +166,11 @@ inline_text(table1, variable = "CigaretteButts", column = "stat_2",
             pattern = "{n}/{N} ({p}%)")
 inline_text(table1, variable = "CigaretteButts", column = "stat_4",
             pattern = "{n}/{N} ({p}%)")
-
 ```
 
-- @fig-hist illustrates the number of homes powered each year, with a note highlighting that each ton of trash generates an average of 500 kW of electricity, sufficient for an average household's daily consumption of 30 kW.
-- @tbl-one displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as 'Missing' and p-values highlighted.
-- There were `r stats$n` Trash Wheels in the Mr. Trash Wheel Baltimore Healthy Harbor initiative, with an average of `r stats$mean_trash` pieces of trash collected for over `r stats$tot_year` years.  
-- Professor Trash Wheels collected a greater proportion of cigarette butts (`r inline_text(table1, variable = "CigaretteButts", column = "stat_2")`)  compared to the Gwynnda Trash Wheels (`r inline_text(table1, variable = "CigaretteButts", column = "stat_4")`).
-
+-   @fig-hist illustrates the number of homes powered each year, with a note highlighting that each ton of trash generates an average of 500 kW of electricity, sufficient for an average household's daily consumption of 30 kW.
+-   @tbl-one displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as 'Missing' and p-values highlighted.
+- @tbl-logistic contains results from the logistic regression.
+- @tbl-poisson contains results from the poisson regression.  
+-   There were `r stats$n` Trash Wheels in the Mr. Trash Wheel Baltimore Healthy Harbor initiative, with an average of `r stats$mean_trash` pieces of trash collected for over `r stats$tot_year` years.\
+-   Professor Trash Wheels collected a greater proportion of cigarette butts (`r inline_text(table1, variable = "CigaretteButts", column = "stat_2")`) compared to the Gwynnda Trash Wheels (`r inline_text(table1, variable = "CigaretteButts", column = "stat_4")`).

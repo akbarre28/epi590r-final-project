@@ -49,7 +49,7 @@ summary_table
 
 	# Regression - Fit a regression and present well-formatted results from the regression (1 pt). The regression doesn’t have to be of any particular scientific interest, and you don’t have to interpret it in any particular way. You may use {broom} or {gtsummary} or both.
 
-tbl_uvregression(
+regression_summary <- tbl_uvregression(
 	trashwheel,
 	method = lm,
 	y = Weight,
@@ -58,7 +58,10 @@ tbl_uvregression(
 		PlasticBags, Wrappers, SportsBalls),
 	pvalue_fun = label_style_pvalue(digits = 2)
 ) |>
-	bold_p() |> # bold p-values under a given threshold (default 0.05)
+	bold_p() # bold p-values under a given threshold (default 0.05)
+
+regression_summary
+
 
 
 

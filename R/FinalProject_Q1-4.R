@@ -9,8 +9,8 @@ working_dir <- here::here("data")
 trashwheel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-03-05/trashwheel.csv')
 
 readr::write_csv(
-	trashwheel_collection,
-	fs::path(working_dir, "trashwheel_collection.csv")
+	trashwheel,
+	fs::path(working_dir, "trashwheel.csv")
 )
 
 # ____________________________________________________________
@@ -97,21 +97,6 @@ variance <- function(x) {
 
 variance(trashwheel$PlasticBottles)
 var(trashwheel$PlasticBottles, na.rm = TRUE)
-
-
-
-	# ____________________________________________________________
-
-	# Create and render a quarto document that includes at least:
-	# The table, regression results, and figure, with appropriate captions (1 pt).
-	# Inline R code in at least 2 places, 1 pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt).
-	# Cross-references to a table and a figure at least once each (1 pt).
-
-	# Use the {here} package every time you refer to file paths when reading in data and saving any files (1 pt). You must use it at least twice. Feel free to save any files that you create (e.g., your figure) in your code.
-
-	# Commit and push your work to GitHub as you go (1 pt).
-
-	# In a README file, include any notes necessary for us to easily reproduce your analysis (e.g., “Run script.R and then render document.qmd”) (1 pt). We should be able to make a minor change to the underlying data, then re-run the analysis to see how the change affects the results.
 
 
 

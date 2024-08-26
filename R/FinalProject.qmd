@@ -1,0 +1,229 @@
+---
+title: "EPI590R Final Project"
+author: "Alexis Barrett"
+format:
+  html: 
+    theme: quartz
+execute: 
+  eval: true
+  echo: false
+  error: true
+---
+
+```{r}
+#| output: false
+
+#Setting up data and libraries
+library(tidyverse)
+library(gtsummary)
+library(here)
+library(broom)
+library(gt)
+
+working_dir <- here::here("data")
+
+trashwheel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-03-05/trashwheel.csv')
+
+readr::write_csv(
+	trashwheel,
+	fs::path(working_dir, "trashwheel.csv")
+)
+```
+
+### Final Project Instructions:
+- Create and render a quarto document that includes at least:
+	- The table, regression results, and figure, with appropriate captions (1 pt)
+	- Inline R code in at least 2 places, 1 pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt)
+	- Cross-references to a table and a figure at least once each (1 pt)
+	- A brief description of the data, including its source (1 pt)
+- Use the {here} package every time you refer to file paths when reading in data and saving any files (1 pt).
+- You must use it at least twice. Feel free to save any files that you create (e.g., your figure) in your code.
+- Commit and push your work to GitHub as you go (1 pt).
+- In a README file, include any notes necessary for us to easily reproduce your analysis (e.g., “Run script.R and then render document.qmd”) (1 pt).
+- We should be able to make a minor change to the underlying data, then re-run the analysis to see how the change affects the results.
+
+
+### Data Source:
+
+The data is Trash Wheel Collection Data from the Mr. Trash Wheel Baltimore Healthy Harbor initiative (https://www.waterfrontpartnership.org/healthy-harbor-initiative).
+
+Mr. Trash Wheel is a semi-autonomous trash interceptor that is placed at the end of a river, stream or other outfall. Far too lazy to chase trash around the ocean, Mr. Trash Wheel stays put and waits for the waste to flow to him. Sustainably powered and built to withstand the biggest storms, Mr. Trash Wheel uses a unique blend of solar and hydro power to pull hundreds of tons of trash out of the water each year.
+
+The collection data for the Trash Wheels in Baltimore is obtained by sampling the material in each dumpster that is removed for disposal.
+
+
+
+### RScript & Results:
+
+##### Summary Table
+
+```{r}
+#| label: tbl-one
+#| tbl-cap: "Trash Wheel Collection Data"
+
+# Create a {gtsummary} table of descriptive statistics about your data (1 pt).
+table1 <- tbl_summary(
+	trashwheel,
+	by = Name,
+	include = c(
+		PlasticBottles, Polystyrene, CigaretteButts, GlassBottles,
+		PlasticBags, Wrappers 
+		#,SportsBalls #Exclude since has no variation [error returned during `add_p()`: all observations are in the same group
+	),
+	label = list(
+		PlasticBottles ~ "Plastic Bottles",
+		Polystyrene ~ "Polystyrene Items",
+		CigaretteButts ~ "Cigarette Butts",
+		GlassBottles ~ "Glass Bottles",
+		PlasticBags ~ "Plastic Bags",
+		Wrappers ~ "Wrappers"
+		# , SportsBalls ~ "Sports Balls"
+	),
+	missing_text = "Missing"
+) |>
+	modify_header(label ~ "**Trash Collected**") |>
+	modify_spanning_header(all_stat_cols() ~ "**Trash Wheel Name**") |>
+	add_p(pvalue_fun = label_style_pvalue(digits = 2)) |>
+	add_overall(col_label = "**Overall**") |>
+	bold_labels()
+
+table1
+```
+
+```{r}
+# Save table as HTML using gt
+gt_table <- as_gt(table1)
+
+# Define the file path for the HTML file
+html_file_path <- here("documents", "summary_table.html")
+
+# Save the table
+gtsave(gt_table, filename = html_file_path)
+```
+
+
+
+
+##### Regression Table
+
+```{r}
+# Fit a regression and present well-formatted results from the regression using {broom} or {gtsummary} or both (1 pt). 
+# Write and use a function that does something with the data (1 pt). 
+
+new_table_function <- function(model) {
+	tbl_regression(
+		model,
+		label = list(
+					HomesPowered ~ "Homes Powered",
+					PlasticBottles ~ "Plastic Bottles Collected",
+					Polystyrene ~ "Polystyrene Items Collected",
+					CigaretteButts ~ "Cigarette Butts Collected",
+					GlassBottles ~ "Glass Bottles Collected",
+					PlasticBags ~ "Plastic Bags Collected",
+					Wrappers ~ "Wrappers Collected",
+					SportsBalls ~ "Sports Balls Collected"
+		),
+	)
+}
+
+linear_model <- lm(Weight ~ HomesPowered + PlasticBottles + Polystyrene + CigaretteButts + GlassBottles + PlasticBags + Wrappers + SportsBalls,
+  data = trashwheel
+)
+```
+
+```{r}
+#| label: tbl-linear
+#| tbl-cap: "Linear Regression Model"
+new_table_function(linear_model)
+```
+
+
+
+
+##### Figure
+
+```{r}
+#| label: fig-hist
+#| fig-cap: "Homes Powered Over the Years"
+
+# Create a figure (1 pt).
+figure1 <- ggplot(trashwheel, aes(x = as.factor(Year), y = HomesPowered)) +
+	geom_bar(stat = "identity", fill = "skyblue") +
+	labs(x = "Year", y = "Number of Homes Powered") +
+	annotate("text", x = Inf, y = -Inf, label = "Note: Each ton of trash equals an average 500 kW of electricity. An average household will use 30 kW daily.", hjust = 1, vjust = -1, size = 3, color = "black") +
+	theme_minimal() +  # Clean theme
+	theme(axis.text.x = element_text(angle = 45, hjust = 1),
+				panel.background = element_rect(fill = "white"),
+    		plot.background = element_rect(fill = "white")
+				)
+
+figure1
+```
+
+```{r}
+# Define the file path for the PNG file
+file_path <- here("documents", "homes_powered_fig.png")
+
+# Save the figure
+ggsave(file_path, plot = figure1, width = 10, height = 6)
+```
+
+
+
+
+##### Inline & Cross-Reference Statements
+
+```{r}
+stats <- list( 
+  n = n_distinct(trashwheel$Name), # Total trash wheels
+  
+  tot_trash = trashwheel %>%
+    summarise(across(c(PlasticBottles, PlasticBags), \(x) sum(x, na.rm = TRUE))) %>%
+    summarise(total_trash = sum(across(everything()), na.rm = TRUE)) %>%
+    pull(total_trash), # Total trash collected
+  
+  tot_year = trashwheel %>%
+    summarise(min_year = min(Year, na.rm = TRUE), 
+              max_year = max(Year, na.rm = TRUE)) %>%
+    summarise(total_years = max_year - min_year + 1) %>%
+    pull(total_years) # Total number of years
+)
+
+professor_cig <- inline_text(table1, variable = "CigaretteButts", column = "stat_4")
+
+gwynnda_cig <- inline_text(table1, variable = "CigaretteButts", column = "stat_2")
+
+# Format number with commas
+formatted_stats <- list(
+  total_trash = format(stats$tot_trash, big.mark = ",")
+)
+```
+
+-   @fig-hist illustrates the number of homes powered each year, with a note highlighting that each ton of trash generates an average of 500 kW of electricity, sufficient for an average household's daily consumption of 30 kW.
+-   @tbl-one displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as 'Missing' and p-values highlighted.
+- @tbl-linear contains results from the linear regression.
+-   There were `r stats$n` Trash Wheels in the Baltimore Healthy Harbor initiative, with a total of `r formatted_stats$total_trash` pieces of plastic bottles and bags collected over `r stats$tot_year` years.
+-   Professor Trash Wheels collected a greater proportion of cigarette butts (median (Q1,Q3): `r professor_cig`) compared to the Gwynnda Trash Wheels (median (Q1,Q3): `r gwynnda_cig`).
+
+
+##### Additional Function
+```{r}
+#| output: false
+
+# Write and use a function that does something with the data (1 pt).
+variance <- function(x) {
+	if (!is.numeric(x)) {
+		stop("Input must be a numeric vector") # Check if input is a numeric vector
+	}
+	x <- na.omit(x) 	# Remove NA values from the vector
+	mean_x <- mean(x) 	# Calculate the mean of x
+	mean_val <- mean((x - mean_x)^2) # Calculate the variance
+	return(mean_val)
+}
+
+# Check that function works
+variance_plastic_bottles <- variance(trashwheel$PlasticBottles)
+var(trashwheel$PlasticBottles, na.rm = TRUE)
+```
+
+The variance of the number of plastic bottles collected is `r format(variance_plastic_bottles, big.mark = ",")`.

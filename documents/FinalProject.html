@@ -69,20 +69,34 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="final-project-instructions" class="level3">
+<h3 class="anchored" data-anchor-id="final-project-instructions">Final Project Instructions:</h3>
+<ul>
+<li>Create and render a quarto document that includes at least:
+<ul>
+<li>The table, regression results, and figure, with appropriate captions (1 pt)</li>
+<li>Inline R code in at least 2 places, 1 pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt)</li>
+<li>Cross-references to a table and a figure at least once each (1 pt)</li>
+<li>A brief description of the data, including its source (1 pt)</li>
+</ul></li>
+<li>Use the {here} package every time you refer to file paths when reading in data and saving any files (1 pt).</li>
+<li>You must use it at least twice. Feel free to save any files that you create (e.g., your figure) in your code.</li>
+<li>Commit and push your work to GitHub as you go (1 pt).</li>
+<li>In a README file, include any notes necessary for us to easily reproduce your analysis (e.g., “Run script.R and then render document.qmd”) (1 pt).</li>
+<li>We should be able to make a minor change to the underlying data, then re-run the analysis to see how the change affects the results.</li>
+</ul>
+</section>
 <section id="data-source" class="level3">
 <h3 class="anchored" data-anchor-id="data-source">Data Source:</h3>
 <p>The data is Trash Wheel Collection Data from the Mr.&nbsp;Trash Wheel Baltimore Healthy Harbor initiative (https://www.waterfrontpartnership.org/healthy-harbor-initiative).</p>
 <p>Mr.&nbsp;Trash Wheel is a semi-autonomous trash interceptor that is placed at the end of a river, stream or other outfall. Far too lazy to chase trash around the ocean, Mr.&nbsp;Trash Wheel stays put and waits for the waste to flow to him. Sustainably powered and built to withstand the biggest storms, Mr.&nbsp;Trash Wheel uses a unique blend of solar and hydro power to pull hundreds of tons of trash out of the water each year.</p>
 <p>The collection data for the Trash Wheels in Baltimore is obtained by sampling the material in each dumpster that is removed for disposal.</p>
 </section>
-<section id="table" class="level2">
-<h2 class="anchored" data-anchor-id="table">Table</h2>
+<section id="rscript-results" class="level3">
+<h3 class="anchored" data-anchor-id="rscript-results">RScript &amp; Results:</h3>
+<section id="summary-table" class="level5">
+<h5 class="anchored" data-anchor-id="summary-table">Summary Table</h5>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>The following errors were returned during `add_p()`:
-✖ For variable `SportsBalls` (`Name`) and "statistic", "p.value", and
-  "parameter" statistics: all observations are in the same group</code></pre>
-</div>
 <div id="tbl-one" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -90,23 +104,23 @@ Table&nbsp;1: Trash Wheel Collection Data
 </figcaption>
 <div aria-describedby="tbl-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="hclaqdzbil" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hclaqdzbil table {
+<div id="hvtugptdgr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hvtugptdgr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hclaqdzbil thead, #hclaqdzbil tbody, #hclaqdzbil tfoot, #hclaqdzbil tr, #hclaqdzbil td, #hclaqdzbil th {
+#hvtugptdgr thead, #hvtugptdgr tbody, #hvtugptdgr tfoot, #hvtugptdgr tr, #hvtugptdgr td, #hvtugptdgr th {
   border-style: none;
 }
 
-#hclaqdzbil p {
+#hvtugptdgr p {
   margin: 0;
   padding: 0;
 }
 
-#hclaqdzbil .gt_table {
+#hvtugptdgr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -132,12 +146,12 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-left-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_caption {
+#hvtugptdgr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hclaqdzbil .gt_title {
+#hvtugptdgr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -149,7 +163,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-bottom-width: 0;
 }
 
-#hclaqdzbil .gt_subtitle {
+#hvtugptdgr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -161,7 +175,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-top-width: 0;
 }
 
-#hclaqdzbil .gt_heading {
+#hvtugptdgr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -173,13 +187,13 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-right-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_bottom_border {
+#hvtugptdgr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_col_headings {
+#hvtugptdgr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -194,7 +208,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-right-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_col_heading {
+#hvtugptdgr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -214,7 +228,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   overflow-x: hidden;
 }
 
-#hclaqdzbil .gt_column_spanner_outer {
+#hvtugptdgr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -226,15 +240,15 @@ Table&nbsp;1: Trash Wheel Collection Data
   padding-right: 4px;
 }
 
-#hclaqdzbil .gt_column_spanner_outer:first-child {
+#hvtugptdgr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hclaqdzbil .gt_column_spanner_outer:last-child {
+#hvtugptdgr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hclaqdzbil .gt_column_spanner {
+#hvtugptdgr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -246,11 +260,11 @@ Table&nbsp;1: Trash Wheel Collection Data
   width: 100%;
 }
 
-#hclaqdzbil .gt_spanner_row {
+#hvtugptdgr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hclaqdzbil .gt_group_heading {
+#hvtugptdgr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -276,7 +290,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   text-align: left;
 }
 
-#hclaqdzbil .gt_empty_group_heading {
+#hvtugptdgr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -291,15 +305,15 @@ Table&nbsp;1: Trash Wheel Collection Data
   vertical-align: middle;
 }
 
-#hclaqdzbil .gt_from_md > :first-child {
+#hvtugptdgr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hclaqdzbil .gt_from_md > :last-child {
+#hvtugptdgr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hclaqdzbil .gt_row {
+#hvtugptdgr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -318,7 +332,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   overflow-x: hidden;
 }
 
-#hclaqdzbil .gt_stub {
+#hvtugptdgr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -331,7 +345,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   padding-right: 5px;
 }
 
-#hclaqdzbil .gt_stub_row_group {
+#hvtugptdgr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -345,15 +359,15 @@ Table&nbsp;1: Trash Wheel Collection Data
   vertical-align: top;
 }
 
-#hclaqdzbil .gt_row_group_first td {
+#hvtugptdgr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hclaqdzbil .gt_row_group_first th {
+#hvtugptdgr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hclaqdzbil .gt_summary_row {
+#hvtugptdgr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -363,16 +377,16 @@ Table&nbsp;1: Trash Wheel Collection Data
   padding-right: 5px;
 }
 
-#hclaqdzbil .gt_first_summary_row {
+#hvtugptdgr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_first_summary_row.thick {
+#hvtugptdgr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hclaqdzbil .gt_last_summary_row {
+#hvtugptdgr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -382,7 +396,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-bottom-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_grand_summary_row {
+#hvtugptdgr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -392,7 +406,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   padding-right: 5px;
 }
 
-#hclaqdzbil .gt_first_grand_summary_row {
+#hvtugptdgr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -402,7 +416,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-top-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_last_grand_summary_row_top {
+#hvtugptdgr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -412,11 +426,11 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-bottom-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_striped {
+#hvtugptdgr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hclaqdzbil .gt_table_body {
+#hvtugptdgr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -425,7 +439,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-bottom-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_footnotes {
+#hvtugptdgr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -439,7 +453,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-right-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_footnote {
+#hvtugptdgr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -448,7 +462,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   padding-right: 5px;
 }
 
-#hclaqdzbil .gt_sourcenotes {
+#hvtugptdgr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -462,7 +476,7 @@ Table&nbsp;1: Trash Wheel Collection Data
   border-right-color: #D3D3D3;
 }
 
-#hclaqdzbil .gt_sourcenote {
+#hvtugptdgr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -470,72 +484,72 @@ Table&nbsp;1: Trash Wheel Collection Data
   padding-right: 5px;
 }
 
-#hclaqdzbil .gt_left {
+#hvtugptdgr .gt_left {
   text-align: left;
 }
 
-#hclaqdzbil .gt_center {
+#hvtugptdgr .gt_center {
   text-align: center;
 }
 
-#hclaqdzbil .gt_right {
+#hvtugptdgr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hclaqdzbil .gt_font_normal {
+#hvtugptdgr .gt_font_normal {
   font-weight: normal;
 }
 
-#hclaqdzbil .gt_font_bold {
+#hvtugptdgr .gt_font_bold {
   font-weight: bold;
 }
 
-#hclaqdzbil .gt_font_italic {
+#hvtugptdgr .gt_font_italic {
   font-style: italic;
 }
 
-#hclaqdzbil .gt_super {
+#hvtugptdgr .gt_super {
   font-size: 65%;
 }
 
-#hclaqdzbil .gt_footnote_marks {
+#hvtugptdgr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hclaqdzbil .gt_asterisk {
+#hvtugptdgr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hclaqdzbil .gt_indent_1 {
+#hvtugptdgr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hclaqdzbil .gt_indent_2 {
+#hvtugptdgr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hclaqdzbil .gt_indent_3 {
+#hvtugptdgr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hclaqdzbil .gt_indent_4 {
+#hvtugptdgr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hclaqdzbil .gt_indent_5 {
+#hvtugptdgr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hclaqdzbil .katex-display {
+#hvtugptdgr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hclaqdzbil div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hvtugptdgr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -703,26 +717,6 @@ N = 114</p>
 <td class="gt_row gt_center" headers="p.value"><br>
 </td>
 </tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">Sports Balls</td>
-<td class="gt_row gt_center" headers="stat_0">12 (6, 20)</td>
-<td class="gt_row gt_center" headers="stat_1">NA (NA, NA)</td>
-<td class="gt_row gt_center" headers="stat_2">NA (NA, NA)</td>
-<td class="gt_row gt_center" headers="stat_3">12 (6, 20)</td>
-<td class="gt_row gt_center" headers="stat_4">NA (NA, NA)</td>
-<td class="gt_row gt_center" headers="p.value"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Missing</td>
-<td class="gt_row gt_center" headers="stat_0">364</td>
-<td class="gt_row gt_center" headers="stat_1">30</td>
-<td class="gt_row gt_center" headers="stat_2">220</td>
-<td class="gt_row gt_center" headers="stat_3">0</td>
-<td class="gt_row gt_center" headers="stat_4">114</td>
-<td class="gt_row gt_center" headers="p.value"><br>
-</td>
-</tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="even">
 <td colspan="7" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>1</sup></span>
@@ -743,8 +737,8 @@ N = 114</p>
 </div>
 </div>
 </section>
-<section id="regression" class="level2">
-<h2 class="anchored" data-anchor-id="regression">Regression</h2>
+<section id="regression-table" class="level5">
+<h5 class="anchored" data-anchor-id="regression-table">Regression Table</h5>
 <div class="cell">
 <div id="tbl-linear" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -753,23 +747,23 @@ Table&nbsp;2: Linear Regression Model
 </figcaption>
 <div aria-describedby="tbl-linear-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="qvairlryfj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qvairlryfj table {
+<div id="zxsgynmdpa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zxsgynmdpa table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qvairlryfj thead, #qvairlryfj tbody, #qvairlryfj tfoot, #qvairlryfj tr, #qvairlryfj td, #qvairlryfj th {
+#zxsgynmdpa thead, #zxsgynmdpa tbody, #zxsgynmdpa tfoot, #zxsgynmdpa tr, #zxsgynmdpa td, #zxsgynmdpa th {
   border-style: none;
 }
 
-#qvairlryfj p {
+#zxsgynmdpa p {
   margin: 0;
   padding: 0;
 }
 
-#qvairlryfj .gt_table {
+#zxsgynmdpa .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -795,12 +789,12 @@ Table&nbsp;2: Linear Regression Model
   border-left-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_caption {
+#zxsgynmdpa .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qvairlryfj .gt_title {
+#zxsgynmdpa .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -812,7 +806,7 @@ Table&nbsp;2: Linear Regression Model
   border-bottom-width: 0;
 }
 
-#qvairlryfj .gt_subtitle {
+#zxsgynmdpa .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -824,7 +818,7 @@ Table&nbsp;2: Linear Regression Model
   border-top-width: 0;
 }
 
-#qvairlryfj .gt_heading {
+#zxsgynmdpa .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -836,13 +830,13 @@ Table&nbsp;2: Linear Regression Model
   border-right-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_bottom_border {
+#zxsgynmdpa .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_col_headings {
+#zxsgynmdpa .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -857,7 +851,7 @@ Table&nbsp;2: Linear Regression Model
   border-right-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_col_heading {
+#zxsgynmdpa .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -877,7 +871,7 @@ Table&nbsp;2: Linear Regression Model
   overflow-x: hidden;
 }
 
-#qvairlryfj .gt_column_spanner_outer {
+#zxsgynmdpa .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -889,15 +883,15 @@ Table&nbsp;2: Linear Regression Model
   padding-right: 4px;
 }
 
-#qvairlryfj .gt_column_spanner_outer:first-child {
+#zxsgynmdpa .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qvairlryfj .gt_column_spanner_outer:last-child {
+#zxsgynmdpa .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qvairlryfj .gt_column_spanner {
+#zxsgynmdpa .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -909,11 +903,11 @@ Table&nbsp;2: Linear Regression Model
   width: 100%;
 }
 
-#qvairlryfj .gt_spanner_row {
+#zxsgynmdpa .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qvairlryfj .gt_group_heading {
+#zxsgynmdpa .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -939,7 +933,7 @@ Table&nbsp;2: Linear Regression Model
   text-align: left;
 }
 
-#qvairlryfj .gt_empty_group_heading {
+#zxsgynmdpa .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -954,15 +948,15 @@ Table&nbsp;2: Linear Regression Model
   vertical-align: middle;
 }
 
-#qvairlryfj .gt_from_md > :first-child {
+#zxsgynmdpa .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qvairlryfj .gt_from_md > :last-child {
+#zxsgynmdpa .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qvairlryfj .gt_row {
+#zxsgynmdpa .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -981,7 +975,7 @@ Table&nbsp;2: Linear Regression Model
   overflow-x: hidden;
 }
 
-#qvairlryfj .gt_stub {
+#zxsgynmdpa .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -994,7 +988,7 @@ Table&nbsp;2: Linear Regression Model
   padding-right: 5px;
 }
 
-#qvairlryfj .gt_stub_row_group {
+#zxsgynmdpa .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1008,15 +1002,15 @@ Table&nbsp;2: Linear Regression Model
   vertical-align: top;
 }
 
-#qvairlryfj .gt_row_group_first td {
+#zxsgynmdpa .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qvairlryfj .gt_row_group_first th {
+#zxsgynmdpa .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qvairlryfj .gt_summary_row {
+#zxsgynmdpa .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1026,16 +1020,16 @@ Table&nbsp;2: Linear Regression Model
   padding-right: 5px;
 }
 
-#qvairlryfj .gt_first_summary_row {
+#zxsgynmdpa .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_first_summary_row.thick {
+#zxsgynmdpa .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qvairlryfj .gt_last_summary_row {
+#zxsgynmdpa .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1045,7 +1039,7 @@ Table&nbsp;2: Linear Regression Model
   border-bottom-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_grand_summary_row {
+#zxsgynmdpa .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1055,7 +1049,7 @@ Table&nbsp;2: Linear Regression Model
   padding-right: 5px;
 }
 
-#qvairlryfj .gt_first_grand_summary_row {
+#zxsgynmdpa .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1065,7 +1059,7 @@ Table&nbsp;2: Linear Regression Model
   border-top-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_last_grand_summary_row_top {
+#zxsgynmdpa .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1075,11 +1069,11 @@ Table&nbsp;2: Linear Regression Model
   border-bottom-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_striped {
+#zxsgynmdpa .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qvairlryfj .gt_table_body {
+#zxsgynmdpa .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1088,7 +1082,7 @@ Table&nbsp;2: Linear Regression Model
   border-bottom-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_footnotes {
+#zxsgynmdpa .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1102,7 +1096,7 @@ Table&nbsp;2: Linear Regression Model
   border-right-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_footnote {
+#zxsgynmdpa .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1111,7 +1105,7 @@ Table&nbsp;2: Linear Regression Model
   padding-right: 5px;
 }
 
-#qvairlryfj .gt_sourcenotes {
+#zxsgynmdpa .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1125,7 +1119,7 @@ Table&nbsp;2: Linear Regression Model
   border-right-color: #D3D3D3;
 }
 
-#qvairlryfj .gt_sourcenote {
+#zxsgynmdpa .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1133,72 +1127,72 @@ Table&nbsp;2: Linear Regression Model
   padding-right: 5px;
 }
 
-#qvairlryfj .gt_left {
+#zxsgynmdpa .gt_left {
   text-align: left;
 }
 
-#qvairlryfj .gt_center {
+#zxsgynmdpa .gt_center {
   text-align: center;
 }
 
-#qvairlryfj .gt_right {
+#zxsgynmdpa .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qvairlryfj .gt_font_normal {
+#zxsgynmdpa .gt_font_normal {
   font-weight: normal;
 }
 
-#qvairlryfj .gt_font_bold {
+#zxsgynmdpa .gt_font_bold {
   font-weight: bold;
 }
 
-#qvairlryfj .gt_font_italic {
+#zxsgynmdpa .gt_font_italic {
   font-style: italic;
 }
 
-#qvairlryfj .gt_super {
+#zxsgynmdpa .gt_super {
   font-size: 65%;
 }
 
-#qvairlryfj .gt_footnote_marks {
+#zxsgynmdpa .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qvairlryfj .gt_asterisk {
+#zxsgynmdpa .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qvairlryfj .gt_indent_1 {
+#zxsgynmdpa .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qvairlryfj .gt_indent_2 {
+#zxsgynmdpa .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qvairlryfj .gt_indent_3 {
+#zxsgynmdpa .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qvairlryfj .gt_indent_4 {
+#zxsgynmdpa .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qvairlryfj .gt_indent_5 {
+#zxsgynmdpa .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qvairlryfj .katex-display {
+#zxsgynmdpa .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qvairlryfj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zxsgynmdpa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1228,49 +1222,49 @@ Table&nbsp;2: Linear Regression Model
 <td class="gt_row gt_left" headers="label">Homes Powered</td>
 <td class="gt_row gt_center" headers="estimate">0.03</td>
 <td class="gt_row gt_center" headers="conf.low">0.03, 0.03</td>
-<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">Plastic Bottles Collected</td>
 <td class="gt_row gt_center" headers="estimate">0.00</td>
 <td class="gt_row gt_center" headers="conf.low">0.00, 0.00</td>
-<td class="gt_row gt_center" headers="p.value">0.003</td>
+<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">0.003</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">Polystyrene Items Collected</td>
 <td class="gt_row gt_center" headers="estimate">0.00</td>
 <td class="gt_row gt_center" headers="conf.low">0.00, 0.00</td>
-<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">Cigarette Butts Collected</td>
 <td class="gt_row gt_center" headers="estimate">0.00</td>
 <td class="gt_row gt_center" headers="conf.low">0.00, 0.00</td>
-<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">Glass Bottles Collected</td>
 <td class="gt_row gt_center" headers="estimate">0.01</td>
 <td class="gt_row gt_center" headers="conf.low">0.00, 0.01</td>
-<td class="gt_row gt_center" headers="p.value">0.002</td>
+<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">0.002</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">Plastic Bags Collected</td>
 <td class="gt_row gt_center" headers="estimate">0.00</td>
 <td class="gt_row gt_center" headers="conf.low">0.00, 0.00</td>
-<td class="gt_row gt_center" headers="p.value">0.8</td>
+<td class="gt_row gt_center" headers="p.value">0.83</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">Wrappers Collected</td>
 <td class="gt_row gt_center" headers="estimate">0.00</td>
 <td class="gt_row gt_center" headers="conf.low">0.00, 0.00</td>
-<td class="gt_row gt_center" headers="p.value">0.8</td>
+<td class="gt_row gt_center" headers="p.value">0.76</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">Sports Balls Collected</td>
 <td class="gt_row gt_center" headers="estimate">-0.01</td>
 <td class="gt_row gt_center" headers="conf.low">-0.01, 0.00</td>
-<td class="gt_row gt_center" headers="p.value">0.011</td>
+<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">0.011</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="odd">
@@ -1288,8 +1282,8 @@ Table&nbsp;2: Linear Regression Model
 </div>
 </div>
 </section>
-<section id="figure" class="level2">
-<h2 class="anchored" data-anchor-id="figure">Figure</h2>
+<section id="figure" class="level5">
+<h5 class="anchored" data-anchor-id="figure">Figure</h5>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-hist" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -1305,15 +1299,21 @@ Figure&nbsp;1: Homes Powered Over the Years
 </div>
 </div>
 </section>
-<section id="inline-cross-reference" class="level2">
-<h2 class="anchored" data-anchor-id="inline-cross-reference">InLine &amp; Cross-Reference</h2>
+<section id="inline-cross-reference-statements" class="level5">
+<h5 class="anchored" data-anchor-id="inline-cross-reference-statements">Inline &amp; Cross-Reference Statements</h5>
 <ul>
 <li><a href="#fig-hist" class="quarto-xref">Figure&nbsp;1</a> illustrates the number of homes powered each year, with a note highlighting that each ton of trash generates an average of 500 kW of electricity, sufficient for an average household’s daily consumption of 30 kW.</li>
 <li><a href="#tbl-one" class="quarto-xref">Table&nbsp;1</a> displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as ‘Missing’ and p-values highlighted.</li>
 <li><a href="#tbl-linear" class="quarto-xref">Table&nbsp;2</a> contains results from the linear regression.</li>
 <li>There were 4 Trash Wheels in the Baltimore Healthy Harbor initiative, with a total of 3,177,703 pieces of plastic bottles and bags collected over 10 years.</li>
-<li>Professor Trash Wheels collected a greater proportion of cigarette butts (median (Q1,Q3): 8,400 (6,300, 14,000)) compared to the Gwynnda Trash Wheels (median (Q1,Q3): 2,200 (1,200, 3,250)).</li>
+<li>The Professor Trash Wheel collected a greater proportion of cigarette butts (median (Q1,Q3): 8,400 (6,300, 14,000)) compared to the Gwynnda Trash Wheel (median (Q1,Q3): 2,200 (1,200, 3,250)).</li>
 </ul>
+</section>
+<section id="additional-function" class="level5">
+<h5 class="anchored" data-anchor-id="additional-function">Additional Function</h5>
+<p>The variance of the number of polystyrene items collected is 3,357,818.</p>
+<p>The variance of the number of polystyrene items collected is 3,357,818.</p>
+</section>
 </section>
 
 </main>

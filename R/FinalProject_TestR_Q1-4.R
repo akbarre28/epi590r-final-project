@@ -2,6 +2,8 @@
 library(tidyverse)
 library(gtsummary)
 library(broom)
+library(here)
+
 
 getwd()
 working_dir <- here::here("data")
@@ -9,7 +11,7 @@ working_dir <- here::here("data")
 trashwheel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-03-05/trashwheel.csv')
 
 readr::write_csv(
-	trashwheel,
+	trashwheel_clean,
 	fs::path(working_dir, "trashwheel.csv")
 )
 

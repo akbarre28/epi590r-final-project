@@ -1,6 +1,7 @@
 # Trash Wheel Collection Data
 
-This week's data is [Trash Wheel Collection Data](https://docs.google.com/spreadsheets/d/1b8Lbe-z3PNb3H8nSsSjrwK2B0ReAblL2/edit#gid=1143432795) from the [Mr. Trash Wheel](https://www.mrtrashwheel.com/) [Baltimore Healthy Harbor](https://www.waterfrontpartnership.org/healthy-harbor-initiative) initiative.
+This week's data is [Trash Wheel Collection Data](https://docs.google.com/spreadsheets/d/1b8Lbe-z3PNb3H8nSsSjrwK2B0ReAblL2/edit#gid=1143432795) from the [Mr. Trash Wheel](https://www.mrtrashwheel.com/) [Baltimore Healthy Harbor](https://www.waterfrontpartnership.org/healthy-harbor-initiative) initiative. More information available in the following [GitHub] (https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-03-05). 
+
 
 > Mr. Trash Wheel is a semi-autonomous trash interceptor that is placed at the end of a river, stream or other outfall. Far too lazy to chase trash around the ocean, Mr. Trash Wheel stays put and waits for the waste to flow to him. Sustainably powered and built to withstand the biggest storms, Mr. Trash Wheel uses a unique blend of solar and hydro power to pull hundreds of tons of trash out of the water each year.
 

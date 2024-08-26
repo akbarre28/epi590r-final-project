@@ -40,7 +40,7 @@ install.packages(c("tidyverse", "gtsummary", "here", "broom", "gt"))
 trashwheel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-03-05/trashwheel.csv')
 ```
 
->2. Render quatro document ('FinalProject.qmd').
+>2. Open and render quatro document in project documents folder ('FinalProject.qmd').
 
 
 ### Data Dictionary

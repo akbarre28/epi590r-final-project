@@ -1,34 +1,41 @@
 ---
 title: "EPI590R Final Project"
 author: "Alexis Barrett"
-format: html
+format:
+  html: 
+    theme: quartz
+execute: 
+  eval: true
+  echo: false
+  error: true
 ---
 
 ```{r}
-#Setting up data and libraries
-
 #| output: false
+#| eval: false
 
+#Setting up data and libraries
 library(tidyverse)
 library(gtsummary)
 library(here)
 library(broom)
+library(webshot)
 
 working_dir <- here::here("data")
 trashwheel <- read.csv(here("data", "trashwheel.csv"))
 
+```
 
-#INSRTUCTIONS:Create and render a quarto document that includes at least:
-	# The table, regression results, and figure, with appropriate captions (1 pt).
+#Instructions:
+- #Create and render a quarto document that includes at least:
+* # The table, regression results, and figure, with appropriate captions (1 pt).
 	# Inline R code in at least 2 places, 1 pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt).
 	# Cross-references to a table and a figure at least once each (1 pt).
 	# Use the {here} package every time you refer to file paths when reading in data and saving any files (1 pt). You must use it at least twice. Feel free to save any files that you create (e.g., your figure) in your code.
 	# Commit and push your work to GitHub as you go (1 pt).
 
 	# In a README file, include any notes necessary for us to easily reproduce your analysis (e.g., “Run script.R and then render document.qmd”) (1 pt). We should be able to make a minor change to the underlying data, then re-run the analysis to see how the change affects the results.
-
-```
-
+	
 ## Table
 
 ```{r}
@@ -64,12 +71,12 @@ table1
 
 ```{r}
 # Define the file path using here for saving the figure
-file_path <- here("documents", "summary_table.png")
-# Save the figure
-ggsave(file_path, plot = table1, width = 10, height = 6)
+html_file_path <- here("documents", "summary_table.html")
+# Convert the HTML file to PNG
+webshot(html_file_path, file = here("documents", "summary_table.png"), delay = 2)
 ```
 
-<br>
+<p> </p>
 
 ## Regression
 
@@ -77,7 +84,7 @@ ggsave(file_path, plot = table1, width = 10, height = 6)
 new_table_function <- function(model, tidy_fun = broom.helpers::tidy_with_broom_or_parameters) {
 	tbl_regression(
 		model,
-		exponentiate = TRUE,
+		intercept = TRUE,
 		label = list(
 					HomesPowered ~ "Homes Powered",
 					PlasticBottles ~ "Plastic Bottles Collected",
@@ -92,27 +99,23 @@ new_table_function <- function(model, tidy_fun = broom.helpers::tidy_with_broom_
 	)
 }
 
-logistic_model <- glm(
-	Weight ~ HomesPowered + PlasticBottles + Polystyrene + 
-		CigaretteButts + GlassBottles + PlasticBags + Wrappers + 
-			SportsBalls,
-	data = trashwheel, 
-	family = binomial()
-)
-
-poisson_model <- glm(
-	Weight ~ HomesPowered + PlasticBottles + Polystyrene + 
-		CigaretteButts + GlassBottles + PlasticBags + Wrappers + 
-			SportsBalls,
-	data = trashwheel, 
-	family = poisson()
-)
+# Univariate regression model
+univariate_model <- tbl_uvregression(
+	trashwheel,
+	method = lm,
+	y = Weight,
+	include = c(
+		HomesPowered, PlasticBottles, Polystyrene, CigaretteButts, GlassBottles,
+		PlasticBags, Wrappers, SportsBalls),
+	pvalue_fun = label_style_pvalue(digits = 2)
+) |>
+	bold_p() |> # bold p-values under a given threshold (default 0.05)
 ```
 
 ```{r}
-#| label: tbl-logistic
-#| tbl-cap: "Logistic regression"
-new_table_function(logistic_model)
+#| label: tbl-univariate
+#| tbl-cap: "Univariate Regression Model"
+new_table_function(univariate_model)
 ```
 
 ```{r}
@@ -122,7 +125,7 @@ new_table_function(logistic_model)
 new_table_function(poisson_model, tidy_fun = partial(tidy_robust, vcov = "HC1"))
 ```
 
-<br>
+<p> </p>
 
 ## Figure
 
@@ -147,30 +150,28 @@ file_path <- here("documents", "homes_powered_fig.png")
 ggsave(file_path, plot = figure1, width = 10, height = 6)
 ```
 
-<br>
+<p> </p>
 
 ## InLine & Cross-Reference
 
 ```{r}
 stats <- list(
-  n = nrow(trashwheel),
+  n = nrow(trashwheel), # Total trash wheels
   mean_trash = trashwheel %>%
     rowwise() %>%
     mutate(total_trash = sum(c_across(PlasticBottles:SportsBalls), na.rm = TRUE)) %>%
     summarise(mean_trash = mean(total_trash, na.rm = TRUE)) %>%
-    pull(mean_trash),
-  tot_year = length(unique(trashwheel$year))  # Total number of years
+    pull(mean_trash), # Total trash collected
+  tot_year = length(trashwheel$year)  # Total number of years
 )
 
-inline_text(table1, variable = "CigaretteButts", column = "stat_2",
-            pattern = "{n}/{N} ({p}%)")
-inline_text(table1, variable = "CigaretteButts", column = "stat_4",
-            pattern = "{n}/{N} ({p}%)")
+professor_cig <- inline_text(table1, variable = "CigaretteButts", column = "stat_4")
+
+gwynnda_cig <- inline_text(table1, variable = "CigaretteButts", column = "stat_2")
 ```
 
 -   @fig-hist illustrates the number of homes powered each year, with a note highlighting that each ton of trash generates an average of 500 kW of electricity, sufficient for an average household's daily consumption of 30 kW.
 -   @tbl-one displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as 'Missing' and p-values highlighted.
-- @tbl-logistic contains results from the logistic regression.
-- @tbl-poisson contains results from the poisson regression.  
--   There were `r stats$n` Trash Wheels in the Mr. Trash Wheel Baltimore Healthy Harbor initiative, with an average of `r stats$mean_trash` pieces of trash collected for over `r stats$tot_year` years.\
--   Professor Trash Wheels collected a greater proportion of cigarette butts (`r inline_text(table1, variable = "CigaretteButts", column = "stat_2")`) compared to the Gwynnda Trash Wheels (`r inline_text(table1, variable = "CigaretteButts", column = "stat_4")`).
+- @tbl-univariate contains results from the univariate regression.
+-   There were `r stats$n` Trash Wheels in the Mr. Trash Wheel Baltimore Healthy Harbor initiative, with an average of `r stats$mean_trash` pieces of trash collected for over `r stats$tot_year` years.
+-   Professor Trash Wheels collected a greater proportion of cigarette butts (median (Q1,Q3): `r professor_cig`) compared to the Gwynnda Trash Wheels (median (Q1,Q3): `r gwynnda_cig`).

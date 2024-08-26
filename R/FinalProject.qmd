@@ -62,7 +62,7 @@ The collection data for the Trash Wheels in Baltimore is obtained by sampling th
 #| tbl-cap: "Trash Wheel Collection Data"
 
 # Create a {gtsummary} table of descriptive statistics about your data (1 pt).
-table1 <- tbl_summary(
+summary_table <- tbl_summary(
 	trashwheel,
 	by = Name,
 	include = c(
@@ -87,12 +87,12 @@ table1 <- tbl_summary(
 	add_overall(col_label = "**Overall**") |>
 	bold_labels()
 
-table1
+summary_table
 ```
 
 ```{r}
 # Save table as HTML using gt
-gt_table <- as_gt(table1)
+gt_table <- as_gt(summary_table)
 
 # Define the file path for the HTML file
 html_file_path <- here("documents", "summary_table.html")
@@ -123,7 +123,9 @@ new_table_function <- function(model) {
 					Wrappers ~ "Wrappers Collected",
 					SportsBalls ~ "Sports Balls Collected"
 		),
-	)
+		pvalue_fun = label_style_pvalue(digits = 2)  # Format p-values
+	) |>
+  	bold_p() # Bold p-values under a given threshold (default 0.05)
 }
 
 linear_model <- lm(Weight ~ HomesPowered + PlasticBottles + Polystyrene + CigaretteButts + GlassBottles + PlasticBags + Wrappers + SportsBalls,
@@ -189,9 +191,8 @@ stats <- list(
     pull(total_years) # Total number of years
 )
 
-professor_cig <- inline_text(table1, variable = "CigaretteButts", column = "stat_4")
-
-gwynnda_cig <- inline_text(table1, variable = "CigaretteButts", column = "stat_2")
+professor_cig <- inline_text(summary_table, variable = "CigaretteButts", column = "stat_4")
+gwynnda_cig <- inline_text(summary_table, variable = "CigaretteButts", column = "stat_2")
 
 # Format number with commas
 formatted_stats <- list(
@@ -203,7 +204,7 @@ formatted_stats <- list(
 -   @tbl-one displays the types and quantities of trash collected, categorized by trash wheel name, including statistics and overall results, with missing values labeled as 'Missing' and p-values highlighted.
 - @tbl-linear contains results from the linear regression.
 -   There were `r stats$n` Trash Wheels in the Baltimore Healthy Harbor initiative, with a total of `r formatted_stats$total_trash` pieces of plastic bottles and bags collected over `r stats$tot_year` years.
--   Professor Trash Wheels collected a greater proportion of cigarette butts (median (Q1,Q3): `r professor_cig`) compared to the Gwynnda Trash Wheels (median (Q1,Q3): `r gwynnda_cig`).
+-   The Professor Trash Wheel collected a greater proportion of cigarette butts (median (Q1,Q3): `r professor_cig`) compared to the Gwynnda Trash Wheel (median (Q1,Q3): `r gwynnda_cig`).
 
 
 ##### Additional Function
@@ -212,18 +213,24 @@ formatted_stats <- list(
 
 # Write and use a function that does something with the data (1 pt).
 variance <- function(x) {
-	if (!is.numeric(x)) {
-		stop("Input must be a numeric vector") # Check if input is a numeric vector
-	}
-	x <- na.omit(x) 	# Remove NA values from the vector
-	mean_x <- mean(x) 	# Calculate the mean of x
-	mean_val <- mean((x - mean_x)^2) # Calculate the variance
-	return(mean_val)
+  if (!is.numeric(x)) {
+    stop("Input must be a numeric vector") # Check if input is numeric
+  }
+  x <- na.omit(x)  # Remove NA values
+  n <- length(x)   # Number of observations
+  if (n < 2) {
+    stop("At least two data points are required to calculate variance")
+  }
+  mean_x <- mean(x)  # Calculate the mean
+  var_val <- sum((x - mean_x)^2) / (n - 1)  # Calculate the sample variance
+  return(var_val)
 }
 
 # Check that function works
-variance_plastic_bottles <- variance(trashwheel$PlasticBottles)
-var(trashwheel$PlasticBottles, na.rm = TRUE)
+variance_polystyrene <- variance(trashwheel$Polystyrene)
+var(trashwheel$Polystyrene, na.rm = TRUE)
 ```
 
-The variance of the number of plastic bottles collected is `r format(variance_plastic_bottles, big.mark = ",")`.
+The variance of the number of polystyrene items collected is `r format(variance_polystyrene, big.mark = ",")`.
+
+The variance of the number of polystyrene items collected is `r format(var(trashwheel$Polystyrene, na.rm = TRUE), big.mark = ",")`.

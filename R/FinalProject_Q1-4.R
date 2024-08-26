@@ -51,13 +51,14 @@ summary_table
 
 tbl_uvregression(
 	trashwheel,
+	method = lm,
 	y = Weight,
 	include = c(
 		HomesPowered, PlasticBottles, Polystyrene, CigaretteButts, GlassBottles,
-		PlasticBags, Wrappers, SportsBalls
-	),
-	method = lm
-)
+		PlasticBags, Wrappers, SportsBalls),
+	pvalue_fun = label_style_pvalue(digits = 2)
+) |>
+	bold_p() |> # bold p-values under a given threshold (default 0.05)
 
 
 

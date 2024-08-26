@@ -11,103 +11,63 @@ format: html
 
 library(tidyverse)
 library(gtsummary)
-library(janitor)
 library(here)
-library(fs)
+library(broom)
 
-raw_working_dir <- here::here("data", "raw")
-clean_working_dir <- here::here("data", "clean")
-url <- "https://bit.ly/gacttCSV"
-coffee_survey_raw <- readr::read_csv(url)
+working_dir <- here::here("data")
+trashwheel <- read.csv(here("data", "trashwheel.csv"))
 
-# Grab the raw questions for the dictionary.
-coffee_survey_raw |>
-	colnames() |>
-	cat(sep = "\n")
 
-coffee_survey <- coffee_survey_raw |>
-	janitor::clean_names() |>
-	# Get rid of one-hot encoding; users can do that if they'd like. Also,
-	# "flavorings" columns are empty.
-	dplyr::select(
-		submission_id,
-		age = what_is_your_age,
-		cups = how_many_cups_of_coffee_do_you_typically_drink_per_day,
-		where_drink = where_do_you_typically_drink_coffee,
-		brew = how_do_you_brew_coffee_at_home,
-		brew_other = how_else_do_you_brew_coffee_at_home,
-		purchase = on_the_go_where_do_you_typically_purchase_coffee,
-		purchase_other = where_else_do_you_purchase_coffee,
-		favorite = what_is_your_favorite_coffee_drink,
-		favorite_specify = please_specify_what_your_favorite_coffee_drink_is,
-		additions = do_you_usually_add_anything_to_your_coffee,
-		additions_other = what_else_do_you_add_to_your_coffee,
-		dairy = what_kind_of_dairy_do_you_add,
-		sweetener = what_kind_of_sugar_or_sweetener_do_you_add,
-		style = before_todays_tasting_which_of_the_following_best_described_what_kind_of_coffee_you_like,
-		strength = how_strong_do_you_like_your_coffee,
-		roast_level = what_roast_level_of_coffee_do_you_prefer,
-		caffeine = how_much_caffeine_do_you_like_in_your_coffee,
-		expertise = lastly_how_would_you_rate_your_own_coffee_expertise,
-		starts_with("coffee"),
-		prefer_abc = between_coffee_a_coffee_b_and_coffee_c_which_did_you_prefer,
-		prefer_ad = between_coffee_a_and_coffee_d_which_did_you_prefer,
-		prefer_overall = lastly_what_was_your_favorite_overall_coffee,
-		wfh = do_you_work_from_home_or_in_person,
-		total_spend = in_total_much_money_do_you_typically_spend_on_coffee_in_a_month,
-		why_drink = why_do_you_drink_coffee,
-		why_drink_other = other_reason_for_drinking_coffee,
-		taste = do_you_like_the_taste_of_coffee,
-		know_source = do_you_know_where_your_coffee_comes_from,
-		most_paid = what_is_the_most_youve_ever_paid_for_a_cup_of_coffee,
-		most_willing = what_is_the_most_youd_ever_be_willing_to_pay_for_a_cup_of_coffee,
-		value_cafe = do_you_feel_like_you_re_getting_good_value_for_your_money_when_you_buy_coffee_at_a_cafe,
-		spent_equipment = approximately_how_much_have_you_spent_on_coffee_equipment_in_the_past_5_years,
-		value_equipment = do_you_feel_like_you_re_getting_good_value_for_your_money_with_regards_to_your_coffee_equipment,
-		gender,
-		gender_specify = gender_please_specify,
-		education_level,
-		ethnicity_race,
-		ethnicity_race_specify = ethnicity_race_please_specify,
-		employment_status,
-		number_children = number_of_children,
-		political_affiliation
-	)
+#INSRTUCTIONS:Create and render a quarto document that includes at least:
+	# The table, regression results, and figure, with appropriate captions (1 pt).
+	# Inline R code in at least 2 places, 1 pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt).
+	# Cross-references to a table and a figure at least once each (1 pt).
+	# Use the {here} package every time you refer to file paths when reading in data and saving any files (1 pt). You must use it at least twice. Feel free to save any files that you create (e.g., your figure) in your code.
+	# Commit and push your work to GitHub as you go (1 pt).
 
-readr::write_csv(
-	coffee_survey,
-	fs::path(clean_working_dir, "coffee_survey.csv")
-)
+	# In a README file, include any notes necessary for us to easily reproduce your analysis (e.g., “Run script.R and then render document.qmd”) (1 pt). We should be able to make a minor change to the underlying data, then re-run the analysis to see how the change affects the results.
 
-readr::write_csv(
-	coffee_survey_raw,
-	fs::path(raw_working_dir, "coffee_survey_raw.csv")
-)
 ```
 
-## {gtsummary} Table
+
+	
+## Table
 
 ```{r} 
-# Create a {gtsummary} table of descriptive statistics about your data (1 pt)
+#| label: tbl-one
+#| tbl-cap: "Trash Wheel Collection Data"
 
-summary_table <- tbl_summary(
-	coffee_survey,
-	by = 	caffeine,
-	include = c(age, cups, favorite, style, strength, roast_level),
-	
+table1 <- tbl_summary(
+	trashwheel,
+	by = Name,
+	include = c(
+		PlasticBottles, Polystyrene, CigaretteButts, GlassBottles,
+		PlasticBags, Wrappers, SportsBalls
+	),
 	label = list(
-	age ~ "Age",
-	cups ~ "Cups per day",
-	favorite ~ "Favorite coffee",
-	roast_level ~ "Roast level",
-	style ~ "Coffee type",
-	strength ~ "Coffee strength"),
-	
-	missing_text = "Missing") |>
+		PlasticBottles ~ "Plastic Bottles",
+		Polystyrene ~ "Polystyrene Items",
+		CigaretteButts ~ "Cigarette Butts",
+		GlassBottles ~ "Glass Bottles",
+		PlasticBags ~ "Plastic Bags",
+		Wrappers ~ "Wrappers",
+		SportsBalls ~ "Sports Balls"
+	),
+	missing_text = "Missing"
+) |>
+	modify_header(label ~ "**Trash Collected**") |>
+	modify_spanning_header(c("stat_1", "stat_2", "stat_3", "stat_4") ~ "**Trash Wheel Name**") |>
+	add_p(pvalue_fun = label_style_pvalue(digits = 2)) |>
 	add_overall(col_label = "**Overall**") |>
 	bold_labels()
-	
-summary_table
+
+table1
+
+
+# Define the file path using here for saving the figure
+file_path <- here("documents", "summary_table.png")
+# Save the figure
+ggsave(file_path, plot = table1, width = 10, height = 6)
 
 ```
 
@@ -115,7 +75,7 @@ summary_table
 ## Regression
 
 ```{r} 
-# Fit a regression and present well-formatted results from the regression (1 pt). The regression doesn’t have to be of any particular scientific interest, and you don’t have to interpret it in any particular way. You may use {broom} or {gtsummary} or both.
+
 
 
 lm_model <- lm(age ~ strength + roast_level, data = coffee_survey, na.action=na.exclude)
@@ -123,3 +83,50 @@ lm_model <- lm(age ~ strength + roast_level, data = coffee_survey, na.action=na.
 
 ```
 
+
+## Figure
+
+```{r} 
+
+
+#| label: fig-hist
+#| fig-cap: "Homes Powered Over the Years"
+
+figure1 <- ggplot(trashwheel, aes(x = as.factor(Year), y = HomesPowered)) +
+	geom_bar(stat = "identity", fill = "skyblue") +
+	labs(x = "Year", y = "Number of Homes Powered") +
+	annotate("text", x = Inf, y = -Inf, label = "Note: Each ton of trash equates to on average 500 kW of electricity. An average household will use 30 kW daily.", hjust = 1, vjust = -1, size = 3, color = "black") +
+	theme_minimal() +  # Clean theme
+	theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+figure1
+
+
+# Define the file path using here for saving the figure
+file_path <- here("documents", "homes_powered_fig.png")
+# Save the figure
+ggsave(file_path, plot = figure1, width = 10, height = 6)
+
+```
+
+
+#InLine & Cross-Reference
+```{r}
+#Pulling a statistic from a table (i.e., using gtsummary::inline_text()) and 1 printing something else (like we did with the mean age in the example) (1 pt).
+# Cross-references to a table and a figure at least once each (1 pt).
+
+```
+
+inline_text(table1, variable = "glasses", column = "stat_0",
+            pattern = "{n}/{N} ({p}%)")
+            
+stats <- list(n = nrow(data),
+              mean_age = mean(data$age))
+
+There were `r stats$n` participants with a mean age of `r stats$mean_age`.  
+
+A greater proportion of female (`r inline_text(table1, variable = "glasses", column = "stat_2")`) than male 
+
+(`r inline_text(table1, variable = "glasses", column = "stat_1")`) participants wore glasses.
+
+@fig-hist contains a histogram and @tbl-one a summary table.
